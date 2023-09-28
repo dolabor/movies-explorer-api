@@ -1,8 +1,9 @@
 const Movies = require('../models/movie');
-const { BadRequestError, NotFoundError, ForbiddenError } = require('../utils/errors/errors');
+const { NotFoundError, ForbiddenError } = require('../utils/errors/errors');
 
 const getMovies = (req, res, next) => {
-  Movies.find()
+  const owner = req.user._id;
+  Movies.find({ owner })
     .then((movies) => {
       res.send(movies);
     })
@@ -23,6 +24,7 @@ const createMovie = (req, res, next) => {
     thumbnail,
     movieId,
   } = req.body;
+  const owner = req.user._id;
 
   Movies.create({
     country,
@@ -36,12 +38,9 @@ const createMovie = (req, res, next) => {
     nameEN,
     thumbnail,
     movieId,
+    owner,
   })
-    .then((movie) => {
-      Movies.findById(movie._id)
-        .then((createdMovie) => res.send(createdMovie))
-        .catch(() => next(new BadRequestError('Ошибка при создании фильма')));
-    })
+    .then((movie) => res.send(movie))
     .catch(next);
 };
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { celebrate, Joi } = require('celebrate');
+const { userSignupValidation, userSigninValidation } = require('../utils/userValidation');
 const userRouter = require('./users');
 const movieRouter = require('./movies');
 const { createUser, login, logout } = require('../controllers/users');
@@ -8,21 +8,8 @@ const auth = require('../middlewares/auth');
 
 const rootRouter = express.Router();
 
-rootRouter.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
-  }),
-}), createUser);
-
-rootRouter.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
+rootRouter.post('/signup', userSignupValidation, createUser);
+rootRouter.post('/signin', userSigninValidation, login);
 rootRouter.delete('/signout', logout);
 
 rootRouter.use('/users', auth, userRouter);
