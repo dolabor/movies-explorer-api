@@ -1,0 +1,16 @@
+# Optional REPL history
+.DS_Store
+.idea
+.vscode
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+node_modules
+
+# Optional npm cache directory
+.npm
+
+.env
