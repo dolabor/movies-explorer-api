@@ -18,7 +18,7 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -33,7 +33,7 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -45,7 +45,8 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovieById = (req, res, next) => {
-  Movies.findById(req.params.movieId)
+  const { movieId } = req.params;
+  Movies.findOne({ movieId })
     .then((movie) => {
       if (!movie) {
         return next(new NotFoundError('Фильм не найден'));
@@ -57,7 +58,7 @@ const deleteMovieById = (req, res, next) => {
         .then(() => res.send({ message: 'Фильм успешно удален' }))
         .catch(next);
     })
-    .catch(next);
+    .catch((err) => console.log(err));
 };
 
 module.exports = {

@@ -18,7 +18,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'https://movies-explorer-EC.nomoredomainsicu.ru',
-    'http://localhost:4001',
+    'http://localhost:3001',
   ],
   methods: 'GET, POST, PUT, DELETE, PATCH',
   credentials: true,

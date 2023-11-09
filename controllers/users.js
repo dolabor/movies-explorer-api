@@ -14,8 +14,8 @@ const createUser = async (req, res, next) => {
 
     res.status(201).send({
       user: {
-        email: user.email,
         name: user.name,
+        email: user.email,
       },
     });
   } catch (err) {
