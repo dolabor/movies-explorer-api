@@ -42,10 +42,10 @@ const getCurrentUserProfile = (req, res, next) => {
 
 const updateUserProfile = async (req, res, next) => {
   try {
-    const { email, name } = req.body;
+    const { name, email } = req.body;
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      { email, name },
+      { name, email },
       { new: true, runValidators: true },
     )
       .orFail(new NotFoundError('Пользователь не найден'));
