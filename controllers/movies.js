@@ -27,9 +27,9 @@ const createMovie = (req, res, next) => {
   const owner = req.user._id;
 
   Movies.findOne({ movieId })
-    .then((movie) => {
-      if (movie) {
-        res.send('Фильм уже добавлен в избранное');
+    .then((foundMovie) => {
+      if (foundMovie) {
+        res.send(foundMovie);
       } else {
         Movies.create({
           country,
@@ -45,7 +45,7 @@ const createMovie = (req, res, next) => {
           movieId,
           owner,
         })
-          .then(() => res.send(movie))
+          .then((newMovie) => res.send(newMovie))
           .catch(next);
       }
     });
